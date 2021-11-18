@@ -32,7 +32,6 @@ public class AdminPageController {
         model.addAttribute("users", users);
         List<Role> roles = roleService.getRoles();
         model.addAttribute("roles", roles);
-        model.addAttribute("result001", "result001");
 
         List<Object> userRole = entityManager.createNativeQuery(
         """

@@ -37,13 +37,13 @@
 
         <!-- VL: Provides fast application restarts (!!!!), LiveReload, and configurations for enhanced development experience.
         it's from spring.io/guides example.
+-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
--->
 <!--        //////////////// for database CRUD ///////////////////////-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
