@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru-RU">
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/static/main.css}" rel="stylesheet" />
+    <title>VL: admin page</title>
+</head>
+<body>
+
+<h3>Users table</h3>
+<br/>
+<table>
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Created</th>
+        <th>Modified</th>
+        <th>actions</th>
+    </tr>
+    <tr th:each = "user : ${users}">
+        <td th:utext = "${user.id}"> </td>
+        <td th:utext = "${user.firstName}"> </td>
+        <td th:utext = "${user.lastName}"> </td>
+        <td th:utext = "${user.email}"> </td>
+        <td th:utext = "${user.password}"> </td>
+        <td th:utext = "${user.created}"> </td>
+        <td th:utext = "${user.modified}"> </td>
+        <td>
+            <a th:href="@{/admin/edit(id=${user.id})}">edit</a>
+            <!--            <a href="/edit?id=${user.id}">edit</a>-->
+            <a th:href="@{/admin/delete(id=${user.id})}">delete</a>
+        </td>
+    </tr>
+</table>
+
+<h2> <a th:href="@{/admin/addUser}">Add new user</a> </h2>
+
+<h3 th:utext="${result001}"></h3>
+
+<a th:href="@{/user}">Go to "user"</a> <br/>
+
+<form action="#" th:action="@{/logout}" method="get">
+    <input type="submit" value="logout"/>
+</form>
+
+
+<div id="box">
+    <div id = "roles">
+        <h3>Roles:</h3>
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Role</th>
+                <th>actions</th>
+            </tr>
+            <tr th:each = "role : ${roles}">
+                <td th:utext = "${role.id}"> </td>
+                <td th:utext = "${role.name}"> </td>
+                <td>
+                    <a th:href="@{/admin/editRole(id=${role.id})}">edit</a>
+                    <a th:href="@{/admin/deleteRole(id=${role.id})}">delete</a>
+                </td>
+            </tr>
+        </table>
+
+        <h3 th:utext="${result002}"></h3>
+        <h2> <a th:href="@{/admin/addRole}">Add new role</a> </h2>
+    </div>
+
+    <div id="user_role">
+        <h3>User_Role:</h3>
+
+        <table>
+            <tr>
+                <th>User</th>
+                <th>User_id</th>
+                <th>Role_id</th>
+                <th>Role</th>
+            </tr>
+            <tr th:each = "ur : ${userRole}">
+                <td th:utext = "${ur[0]}"> </td>
+                <td th:utext = "${ur[1]}"> </td>
+                <td th:utext = "${ur[2]}"> </td>
+                <td th:utext = "${ur[3]}"> </td>
+                <!--
+                        <td>
+                            <a th:href="@{/editRole11(id=${ur.User_id})}">edit</a>
+                            <a th:href="@{/deleteRole11(id=${ur.User_id})}">delete</a>
+                        </td>
+                -->
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br class="box">
+<h3> lalala:  end of page 01 </h3>
+
+</body>
+</html>

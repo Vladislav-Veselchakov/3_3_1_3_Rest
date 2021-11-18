@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru-RU">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/static/main.css}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>Edit user</title>
+</head>
+<body>
+
+
+    <form>
+        <div>
+            <div id="editUser">
+                <input type="hidden" name="id" th:field = "${user.id}"/> <br/>
+                <label>First name: </label>
+                <input type="text" id="firstName"  th:field = "${user.firstName}"/> <br/>
+                <label>Last name: </label>
+                <input type="text" id="lastName"  th:field = "${user.lastName}"/> <br/>
+                <label>E-mail: </label>
+                <input type="text" id="email"  th:field = "${user.email}"/> <br/>
+                <label>Password</label>
+                <input type="text" id="password"  th:field = "${user.password}"   value="password" > </input><br/>
+
+            </div>
+
+            <div id="editUser_roles">
+                <select size="10" multiple name="selectRoles" id="selectTag">
+                    <th:block th:each="role : ${roles}">
+                        <option th:if="${role.checked == true}" selected
+                                th:value="${role.id}"
+                                th:text="${role.name}" name="roleOption">
+                        <option th:unless="${role.checked == true}"
+                                th:value="${role.id}"
+                                th:text="${role.name}" name="roleOption">
+                    </th:block>
+                </select>
+
+<!--
+                <br/>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>Role name</th>
+                    </tr>
+                    <tr th:each = "role, stat : *{roles}">
+&lt;!&ndash;                        <td th:utext="${role.name}"></td>&ndash;&gt;
+&lt;!&ndash;                        <td th:utext="${role.id}"></td>&ndash;&gt;
+&lt;!&ndash;                        <td th:utext="${role.checked}"></td>&ndash;&gt;
+                        &lt;!&ndash;                        <td > <input type="text" th:field = "*{roles[__${stat.index}__] role.id}" > </td>&ndash;&gt;
+                        &lt;!&ndash;                        <td > <input type="text" th:field = "*{roles[__${stat.index}__] role.name}" > </td>&ndash;&gt;
+                        <td > <input class="roles" type="checkbox" th:field = "*{roles[__${stat.index}__].checked}" > </td>
+                        <td > <input class="roles" type="text" readonly="readonly" th:field = "*{roles[__${stat.index}__].id}" > </td>
+                        <td > <input class="roles" type="text" readonly="readonly" th:field = "*{roles[__${stat.index}__].name}" > </td>
+
+&lt;!&ndash;                        <td > <input class="roles" type="checkbox" th:utext = "${role.checked}" > </td>&ndash;&gt;
+&lt;!&ndash;                        <td > <input class="roles" type="text" readonly="readonly" th:utext = "${role.id}" > </td>&ndash;&gt;
+&lt;!&ndash;                        <td > <input class="roles" type="text" readonly="readonly" th:utext = "${role.name}" > </td>&ndash;&gt;
+
+                    </tr>
+                </table>
+-->
+            </div>
+        </div>
+
+
+
+        <br/>
+        <input type="button" value="save" id="bSave"/>
+    </form>
+
+<br/>
+    <a th:href="@{/admin}">Go to admin</a> <br/>
+<form action="#" th:action="@{/logout}" method="get">
+    <input type="submit" value="logout"/>
+</form>
+
+<H4 id="summa"></H4>
+
+    <script type="text/javascript">
+        let bSave = document.getElementById("bSave");
+        bSave.onclick = function() {
+            console.log("we're in onclick()")
+            ///// рабочая версия с JQuery:
+            //let sjq = $('#selectTag').val();
+            //console.log("sjq")
+            //console.log(sjq)
+
+            let body = {}
+            body.id = document.getElementById("id").value;
+            body.firstName = document.getElementById("firstName").value;
+            body.lastName = document.getElementById("lastName").value;
+            body.email = document.getElementById("email").value;
+            body.password = document.getElementById("password").value;
+            body.roles = []
+
+            let selectedRoles = selectTag.selectedOptions; //работает, но выбирает только первый selected option [...selectTag.options].find(option => option.selected)
+            let selRole = {checked : false, id : 0, name : ""};
+            console.log("before cycle")
+            for(let i = 0; i < selectedRoles.length; i++) {
+                body.roles[i] = {
+                    checked : true,
+                    id : selectedRoles[i].value,
+                    name : selectedRoles[i].text
+                };
+            }
+            console.log("after cycle")
+
+            console.log("body: ")
+            console.log(body)
+            console.log("before postParams()...011")
+            postParams(body)
+
+            //redirect #1:
+            //window.location.href = '/admin';
+
+            // redirect by jquery:
+            //$(location).attr('href','/admin');
+
+            //При изменении свойств location также происходит перезагрузка страниц,
+            // но в этом случае записи об их посещении в history пропадают.
+            // location="http://ya.ru"
+
+            // Метод replace() позволяет заменить одну страницу другой таким образом, что это замещение не будет отражено в истории
+            // HTML-страниц (history) браузера, и при нажатии на кнопку Back, из панели инструментов, пользователь всегда будет попадать на
+            // первую загруженную обычным способом страницу.
+
+            /////////////////////////////////////////////    window.location.replace('http://localhost:8080/admin');
+
+            // Редирект для устройств Apple и Android
+            // if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPad/i) || (navigator.userAgent.match(/Android/i))) {
+            //     document.location = "page-optimized-for-mobile.html";
+            // }
+            // return false;
+        }
+
+
+        /////////////////////////////// с пом. fetch() //////////////////
+        async function postParams(pbody) {
+            let response = {};
+            console.log("w're IN postParams()...")
+            try {
+                console.log("before fetch()");
+                response = await fetch("/admin/editUser", {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(pbody) // body: JSON.stringify(user)
+                });
+                console.log("after fetch()");
+            } catch (ex) {
+                console.log(ex.message);
+            }
+            if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
+                console.log("berfore response()");
+                let result = await response.json();
+                console.log("after response.json()")
+                // let result = JSON.parse(xmlhttp.responseText);
+                console.log(result);
+                document.getElementById("summa").innerHTML = JSON.stringify(result); // Выводим ответ сервера
+                window.location.replace('http://localhost:8080/admin');
+            } else {
+                alert("Ошибка HTTP: " + response.status);
+            }
+            // console.log(result.message)
+        } /////////////// c пом fetch() ///////////////
+
+/* ///////// Данная функция создаёт кроссбраузерный объект XMLHTTP ///////////
+
+              function getXmlHttp() {
+                  var xmlhttp;
+                  try {
+                      xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+                  } catch (e) {
+                      try {
+                          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                      } catch (E) {
+                          xmlhttp = false;
+                      }
+                  }
+                  if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+                      xmlhttp = new XMLHttpRequest();
+                  }
+                  return xmlhttp;
+              }
+*/
+
+
+
+/* //////////// POST с пом. new XMLHttpRequest() //////////
+      function postParams(pbody) {
+          console.log("we're in postParams()")
+          // var xmlhttp = getXmlHttp(); // Создаём объект XMLHTTP
+          var xmlhttp = new XMLHttpRequest()
+          xmlhttp.open('POST', '/admin/editUser', false); // Открываем асинхронное/синхронное соединение
+          //xmlhttp.open('POST', 'file:///C:/Users/VVAntipov/IdeaProjects/3_3_1_1_SpringBoot%20wrap%20class/src/main/resources/templates/editUser.html#', true); // Открываем асинхронное соединение
+          // xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
+          xmlhttp.setRequestHeader('Content-Type', 'application/json');
+          console.log("Before Send()")
+          xmlhttp.send(JSON.stringify(pbody)); // Отправляем POST-запрос
+          console.log("after send()")
+          // 4. Если код ответа сервера не 200, то это ошибка
+          if (xmlhttp.status != 200) {
+              // обработать ошибку
+              alert( xmlhttp.status + ': ' + xmlhttp.statusText ); // пример вывода: 404: Not Found
+          } else {
+              // вывести результат
+              alert( xmlhttp.responseText ); // responseText -- текст ответа.
+              let vlResp = JSON.parse(xmlhttp.responseText);
+              console.log(vlResp);
+              document.getElementById("summa").innerHTML = xmlhttp.responseText; // Выводим ответ сервера
+          }
+          // xmlhttp.onreadystatechange = function () { // Ждём ответа от сервера
+          //     if (xmlhttp.readyState == 4) { // Ответ пришёл
+          //         if (xmlhttp.status == 200) { // Сервер вернул код 200 (что хорошо)
+          //             document.getElementById("summa").innerHTML = xmlhttp.responseText; // Выводим ответ сервера
+          //         }
+          //     }
+          // };
+      }
+*/
+
+        /* /////////////////////////////////////////////////////////////
+
+        var xhr = new XMLHttpRequest();
+    xhr.open("POST", yourUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        value: value
+    }));
+    xhr.send(JSON.stringify({
+        value: value
+    }));
+    Кстати, дл
+        /////////////////////////////////////////////////////////////////////////////*/
+
+        /*  ///// Жасулан как получить выбранные опции jquery
+        let roles = [];
+            let i = 0;
+            $(form + " option:selected").each(function () {
+                roles[i] = new Role(this.value, this.text);
+                i++;
+            });
+        */
+
+    </script>
+
+
+
+</body>
+</html>
+
