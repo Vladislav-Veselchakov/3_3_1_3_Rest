@@ -14,10 +14,7 @@ import web.service.UserService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,13 +33,29 @@ public class AdminUserController {
         return "addUser";
     }
 
-    @PostMapping(value = "/addUser",  produces = {"application/xml; charset=UTF-8"})
-    public String addUser(@ModelAttribute("user") User user, ModelMap model) {
-
+    @PostMapping(value = "/addUser",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.OK)
+    public Map<String, Object> addUser(@RequestBody User user, ModelMap model) {
+        Set<Role> roles = user.getRoles();
+        user.setRoles(null);
+        try {
+            userService.add(user);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Map<String, Object> lvRespon = new HashMap<>();
+            lvRespon.put("VL_Users", ex.getStackTrace());
+            return lvRespon;
+        }
+        user.setRoles(roles);
+        userService.update(user);
+        // userService.setRoles(); ???? Убрать из других месть ? И сделать в update? И вместо setCreated(...):
         userService.setCreated(user, new GregorianCalendar().getTime());
         userService.setModified(user, new GregorianCalendar().getTime());
-        userService.add(user);
-        return "redirect:/admin";
+        Map<String, Object> lvRespon = new HashMap<>();
+        lvRespon.put("VL_response", "VL: changed - ok!");
+        lvRespon.put("VL_Users", userService.getUsers());
+        return lvRespon;
     }
 
     @GetMapping(value = "/edit")

@@ -78,13 +78,22 @@
                     <div class="row">
                         <div class="col-md-4 border"></div>
                         <div class="col-md-4 border">
-                            <form class="text-center" action="#" th:action="@{/admin/addUser}" method="post" th:object="${user}">
+                            <form class="text-center" action="#" th:action="@{/admin/addUser}" method="post" th:object="${User}">
                                 <h6>First name</h6>
-                                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"></input>
-                                <label >First name: </label>
-                                <h6>firs name 2</h6>
-<!--                                <input type="text" class="form-control" id="fn"  th:field = "*{firstName}" th:value="firstName"> </input><br/>-->
-
+                                <input type="text" class="form-control" id="firstName" aria-describedby="basic-addon3" required></input>
+                                <h6>Last name</h6>
+                                <input type="text" class="form-control" id="lastName" aria-describedby="basic-addon3" required></input>
+                                <h6>E-mail</h6>
+                                <input type="text" class="form-control" id="email" aria-describedby="basic-addon3" required></input>
+                                <h6>Password</h6>
+                                <input type="text" class="form-control" id="password" aria-describedby="basic-addon3" required></input>
+                                <H6>Roles</H6>
+                                <select class="form-select" multiple aria-label="пример множественного выбора" name="selectRoles" id="selectTag" size="10" required>
+                                    <th:block th:each="role : ${roles}">
+                                        <option th:value="${role.id}" th:text="${role.name}" name="roleOption">
+                                    </th:block>
+                                </select>
+                                <input type="button" class="btn btn-success" value="Add new user" id="bAddUser">
                             </form>
                         </div>
                         <div class="col-md-4 border"></div>
@@ -176,16 +185,7 @@
 
 <!-- //////////////////////////end of body //////////////////////////////////////////////////////////////// -->
 
-<script type="text/javascript">
-    let panel2 = document.getElementById("panel2");
-    let vTime = new Date();
-    panel2.innerHTML = vTime.getHours() + ":" + vTime.getMinutes() + ":" + vTime.getSeconds() + " user name here";
-
-    let mUser = document.getElementById("v-pills-user-tab");
-    mUser.onclick = function (elem) {
-        alert("not realized yet");
-    }
-</script>
+<script type="text/javascript" src="/static/VLEditAddUser.js"></script>
 <!-- Optional JavaScript ////////////////////////////////////////////////////////////////////////////////// -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

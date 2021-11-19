@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 public class AdminPageController {
+
     @PersistenceContext
     EntityManager entityManager;
 
