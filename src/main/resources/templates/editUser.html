@@ -13,6 +13,7 @@
         <div>
             <div id="editUser">
                 <input type="hidden" name="id" th:field = "${user.id}"/> <br/>
+                <input type="hidden" id="created" th:field= "${user.created}"/> <br/>
                 <label>First name: </label>
                 <input type="text" id="firstName"  th:field = "${user.firstName}"/> <br/>
                 <label>Last name: </label>
@@ -88,6 +89,7 @@
 
             let body = {}
             body.id = document.getElementById("id").value;
+            body.created = document.getElementById("created").value;
             body.firstName = document.getElementById("firstName").value;
             body.lastName = document.getElementById("lastName").value;
             body.email = document.getElementById("email").value;

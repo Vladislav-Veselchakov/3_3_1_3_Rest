@@ -4,7 +4,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -63,6 +66,14 @@ public class User implements UserDetails {
         this.created = created;
     }
 
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
     public Long getId() {
         return id;
     }
@@ -95,13 +106,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

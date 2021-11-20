@@ -26,12 +26,12 @@ public class AdminUserController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = "/addUser")
-    public String addPage(ModelMap model) {
-        User usr = new User();
-        model.addAttribute("user", usr);
-        return "addUser";
-    }
+//    @GetMapping(value = "/addUser")
+//    public String addPage(ModelMap model) {
+//        User usr = new User();
+//        model.addAttribute("user", usr);
+//        return "addUser";
+//    }
 
     @PostMapping(value = "/addUser",  produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -48,10 +48,9 @@ public class AdminUserController {
             return lvRespon;
         }
         user.setRoles(roles);
-        userService.update(user);
-        // userService.setRoles(); ???? Убрать из других месть ? И сделать в update? И вместо setCreated(...):
         userService.setCreated(user, new GregorianCalendar().getTime());
         userService.setModified(user, new GregorianCalendar().getTime());
+        userService.update(user);
         Map<String, Object> lvRespon = new HashMap<>();
         lvRespon.put("VL_response", "VL: changed - ok!");
         lvRespon.put("VL_Users", userService.getUsers());

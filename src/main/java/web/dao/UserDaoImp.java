@@ -14,18 +14,6 @@ import java.util.Set;
 
 @Repository
 public class UserDaoImp implements UserDao {
-    @Override
-    public void setModified(User user, Date modified) {
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY");
-        user.setModified(df.format(modified).toString());
-    }
-
-    @Override
-    public void setCreated(User user, Date created) {
-        DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY");
-        user.setCreated(df.format(created).toString());
-    }
-
     @PersistenceContext
     private EntityManager entityManager;
 

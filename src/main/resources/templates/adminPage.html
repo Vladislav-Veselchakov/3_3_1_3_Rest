@@ -34,14 +34,14 @@
         <h1> Admin panel </h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Users_table-tab" data-bs-toggle="tab" data-bs-target="#Users_table" type="button" role="tab" aria-controls="Users_table" aria-selected="true">Users table</button>
+                <button class="nav-link active" id="Users_table-tab" data-bs-toggle="tab" data-bs-target="#Users_table" type="button" role="tab" aria-controls="Users_table" aria-selected="true">Users table</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="NewUser-tab" data-bs-toggle="tab" data-bs-target="#NewUser" type="button" role="tab" aria-controls="NewUser" aria-selected="false">New user</button>
+                <button class="nav-link" id="NewUser-tab" data-bs-toggle="tab" data-bs-target="#NewUser" type="button" role="tab" aria-controls="NewUser" aria-selected="false">New user</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade" id="Users_table" role="tabpanel" aria-labelledby="Users_table-tab">
+            <div class="tab-pane fade show active" id="Users_table" role="tabpanel" aria-labelledby="Users_table-tab">
                 <h5>All users</h5>
                 <table class="table table-striped">
                     <thead>
@@ -72,7 +72,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade show active" id="NewUser" role="tabpanel" aria-labelledby="NewUser-tab">
+            <div class="tab-pane fade" id="NewUser" role="tabpanel" aria-labelledby="NewUser-tab">
                 <div class="container-fluid border">
                     <div class="row">Add new user 003 <span style="display: inline" id="panel2">ttt</span> </div>
                     <div class="row">

@@ -6,6 +6,8 @@ import web.dao.UserDao;
 import web.model.Role;
 import web.model.User;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -56,21 +58,14 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void setModified(User user, Date modified) {
-        userDao.setModified(user, modified);
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY");
+        user.setModified(df.format(modified));
     }
 
     @Override
     public void setCreated(User user, Date created) {
-        userDao.setCreated(user, created);
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-YYYY");
+        user.setCreated(df.format(created));
     }
 
-    @Override
-    public void setRoleByName(User user, String roleName) {
-        userDao.setRoleByName(user, roleName);
-    }
-
-    @Override
-    public void setRoles(User user, Set<Role> roles) {
-        userDao.setRoles(user, roles);
-    }
 }

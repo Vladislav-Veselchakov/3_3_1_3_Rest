@@ -35,16 +35,13 @@ async function postParams(pbody) {
         console.log(ex.message);
     }
     if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
-    //      let result = await response.json();
-    //        document.getElementById("summa").innerHTML = JSON.stringify(result); // Выводим ответ сервера
-
-//        window.location.replace('http://localhost:8080/admin');
-        let tabUserTable = document.getElementById("Users_table-tab");
-        tabUserTable.classList.add("active");
-        let tabNewUser = document.getElementById("NewUser-tab");
-        tabNewUser.classList.remove("active");
-        document.getElementById("Users_table").classList.add("show", "active");
-        document.getElementById("NewUser").classList.remove("show", "active");
+        window.location.replace('http://localhost:8080/admin');
+        // let tabUserTable = document.getElementById("Users_table-tab");
+        // tabUserTable.classList.add("active");
+        // let tabNewUser = document.getElementById("NewUser-tab");
+        // tabNewUser.classList.remove("active");
+        // document.getElementById("Users_table").classList.add("show", "active");
+        // document.getElementById("NewUser").classList.remove("show", "active");
 
     } else {
         alert("Ошибка HTTP: " + response.status);
