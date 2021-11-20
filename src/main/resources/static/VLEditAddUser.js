@@ -35,7 +35,7 @@ async function postParams(pbody) {
         console.log(ex.message);
     }
     if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
-        window.location.replace('http://localhost:8080/admin');
+        window.location.replace('/admin');
         // let tabUserTable = document.getElementById("Users_table-tab");
         // tabUserTable.classList.add("active");
         // let tabNewUser = document.getElementById("NewUser-tab");
@@ -47,6 +47,16 @@ async function postParams(pbody) {
         alert("Ошибка HTTP: " + response.status);
     }
 } // async function postParams(pbody)
+///////////////////////// end of c пом fetch() /////////////////////////////////////
+
+////////////////////////////// modal window - load data /////////////////////////////////////////////
+var editUserModal = document.getElementById('editUser')
+// editUserModal.addEventListener('shown.bs.modal', function (event) {
+editUserModal.addEventListener('show.bs.modal', function (event) {
+    alert("load modal VL");
+})
+////////////////////////////// END of modal window - load data /////////////////////////////////////////////
+
 
 
 let panel2 = document.getElementById("panel2");

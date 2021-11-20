@@ -162,7 +162,8 @@
                 // let result = JSON.parse(xmlhttp.responseText);
                 console.log(result);
                 document.getElementById("summa").innerHTML = JSON.stringify(result); // Выводим ответ сервера
-                window.location.replace('http://localhost:8080/admin');
+                window.location.replace('/admin');
+
             } else {
                 alert("Ошибка HTTP: " + response.status);
             }
