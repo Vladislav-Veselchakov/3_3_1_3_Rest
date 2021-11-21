@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-md-2 my-2">
-            <span class="text-white-50 fs-6 d-flex justify-content-end">logout</span>
+            <a class="text-white-50 fs-6 d-flex justify-content-end" th:href="@{/logout}">logout</a>
         </div>
     </div>
 </div>
@@ -66,7 +66,7 @@
                         <td th:utext = "${user.password}"> </td>
                         <td th:utext = "${user.created}"> </td>
                         <td th:utext = "${user.modified}"> </td>
-                        <td> <a class="btn btn-success" th:href="@{/admin/edit(id=${user.id})}" id="bEdit" data-bs-toggle="modal" data-bs-target="#editUser">Edit</a> </td>
+                        <td> <input type="button" value="Edit" class="btn btn-success" id="bEdit" data-bs-toggle="modal" data-bs-target="#editUser" th:UserID="${user.id}"></input> </td>
                         <td> <a class="btn btn-danger" th:href="@{/admin/delete(id=${user.id})}">Delete</a> </td>
                     </tr>
                     </tbody>
@@ -116,12 +116,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
             </div>
             <div class="modal-body">
-                .. VL edit user .....
-                <input type="text" id= "fnModal" value="one--------------twoo">threeeeeee</input>
+                <form class="text-center" action="#" th:action="@{/admin/addUser}" method="post" th:object="${User}">
+                    <input type="hidden" id="idMod"/>
+                    <input type="hidden" id="createdMod"/>
+                    <h6>First name</h6>
+                    <input type="text" class="form-control" id="firstNameMod" aria-describedby="basic-addon3" required></input>
+                    <h6>Last name</h6>
+                    <input type="text" class="form-control" id="lastNameMod" aria-describedby="basic-addon3" required></input>
+                    <h6>E-mail</h6>
+                    <input type="text" class="form-control" id="emailMod" aria-describedby="basic-addon3" required></input>
+                    <h6>Password</h6>
+                    <input type="text" class="form-control" id="passwordMod" aria-describedby="basic-addon3" required></input>
+                    <H6>Roles</H6>
+                    <select class="form-select" multiple aria-label="пример множественного выбора" name="selectRoles" id="selectTagMod" size="10" required>
+                        <option value="1" text="nothing" name="roleOption">
+                    </select>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary" id="bSave2">Понял</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="bUpdate">Edit</button>
             </div>
         </div>
     </div>

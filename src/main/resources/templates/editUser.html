@@ -113,27 +113,6 @@
             console.log("before postParams()...011")
             postParams(body)
 
-            //redirect #1:
-            //window.location.href = '/admin';
-
-            // redirect by jquery:
-            //$(location).attr('href','/admin');
-
-            //При изменении свойств location также происходит перезагрузка страниц,
-            // но в этом случае записи об их посещении в history пропадают.
-            // location="http://ya.ru"
-
-            // Метод replace() позволяет заменить одну страницу другой таким образом, что это замещение не будет отражено в истории
-            // HTML-страниц (history) браузера, и при нажатии на кнопку Back, из панели инструментов, пользователь всегда будет попадать на
-            // первую загруженную обычным способом страницу.
-
-            /////////////////////////////////////////////    window.location.replace('http://localhost:8080/admin');
-
-            // Редирект для устройств Apple и Android
-            // if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPad/i) || (navigator.userAgent.match(/Android/i))) {
-            //     document.location = "page-optimized-for-mobile.html";
-            // }
-            // return false;
         }
 
 
@@ -170,83 +149,9 @@
             // console.log(result.message)
         } /////////////// c пом fetch() ///////////////
 
-/* ///////// Данная функция создаёт кроссбраузерный объект XMLHTTP ///////////
-
-              function getXmlHttp() {
-                  var xmlhttp;
-                  try {
-                      xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-                  } catch (e) {
-                      try {
-                          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                      } catch (E) {
-                          xmlhttp = false;
-                      }
-                  }
-                  if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
-                      xmlhttp = new XMLHttpRequest();
-                  }
-                  return xmlhttp;
-              }
-*/
 
 
 
-/* //////////// POST с пом. new XMLHttpRequest() //////////
-      function postParams(pbody) {
-          console.log("we're in postParams()")
-          // var xmlhttp = getXmlHttp(); // Создаём объект XMLHTTP
-          var xmlhttp = new XMLHttpRequest()
-          xmlhttp.open('POST', '/admin/editUser', false); // Открываем асинхронное/синхронное соединение
-          //xmlhttp.open('POST', 'file:///C:/Users/VVAntipov/IdeaProjects/3_3_1_1_SpringBoot%20wrap%20class/src/main/resources/templates/editUser.html#', true); // Открываем асинхронное соединение
-          // xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
-          xmlhttp.setRequestHeader('Content-Type', 'application/json');
-          console.log("Before Send()")
-          xmlhttp.send(JSON.stringify(pbody)); // Отправляем POST-запрос
-          console.log("after send()")
-          // 4. Если код ответа сервера не 200, то это ошибка
-          if (xmlhttp.status != 200) {
-              // обработать ошибку
-              alert( xmlhttp.status + ': ' + xmlhttp.statusText ); // пример вывода: 404: Not Found
-          } else {
-              // вывести результат
-              alert( xmlhttp.responseText ); // responseText -- текст ответа.
-              let vlResp = JSON.parse(xmlhttp.responseText);
-              console.log(vlResp);
-              document.getElementById("summa").innerHTML = xmlhttp.responseText; // Выводим ответ сервера
-          }
-          // xmlhttp.onreadystatechange = function () { // Ждём ответа от сервера
-          //     if (xmlhttp.readyState == 4) { // Ответ пришёл
-          //         if (xmlhttp.status == 200) { // Сервер вернул код 200 (что хорошо)
-          //             document.getElementById("summa").innerHTML = xmlhttp.responseText; // Выводим ответ сервера
-          //         }
-          //     }
-          // };
-      }
-*/
-
-        /* /////////////////////////////////////////////////////////////
-
-        var xhr = new XMLHttpRequest();
-    xhr.open("POST", yourUrl, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify({
-        value: value
-    }));
-    xhr.send(JSON.stringify({
-        value: value
-    }));
-    Кстати, дл
-        /////////////////////////////////////////////////////////////////////////////*/
-
-        /*  ///// Жасулан как получить выбранные опции jquery
-        let roles = [];
-            let i = 0;
-            $(form + " option:selected").each(function () {
-                roles[i] = new Role(this.value, this.text);
-                i++;
-            });
-        */
 
     </script>
 

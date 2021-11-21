@@ -57,13 +57,20 @@ public class AdminUserController {
         return lvRespon;
     }
 
-    @GetMapping(value = "/edit")
-    public String editPage(@RequestParam Long id, ModelMap model) {
+    @GetMapping(value = "/edit",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.OK)
+    public Map<String, Object> editPage(@RequestParam Long id, ModelMap model) {
         User user = userService.getUserById(id);
         List<Role> roles = roleService.getRolesWithCheck(user);
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
-        return "editUser";
+
+        Map<String, Object> lvRespon = new HashMap<>();
+        lvRespon.put("user", user);
+        lvRespon.put("roles", roles);
+        return lvRespon;
+
     }
 
 /** VL: original from 3-3-1-1:
@@ -127,13 +134,12 @@ public ResponseEntity editUser(@RequestBody User user, ModelMap model) {
     @ResponseBody
     @ResponseStatus(code = HttpStatus.OK)
     public Map<String, Object> editUser(@RequestBody User user, ModelMap model) {
-        int aaa = 111;
         userService.setModified(user, new GregorianCalendar().getTime());
         userService.update(user);
         Map<String, Object> lvRespon = new HashMap<>();
         lvRespon.put("VL_response", "VL: changed - ok!");
         lvRespon.put("VL_Users", userService.getUsers());
-        return lvRespon;
+        return lvRespon; // не используется. Для тестовых целей
     }
 
     @GetMapping(value = "/delete")
