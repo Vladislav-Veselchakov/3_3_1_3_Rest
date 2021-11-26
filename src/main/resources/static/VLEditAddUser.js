@@ -28,12 +28,10 @@ async function updateUsersTable() {
     for (i = 0; i < bDeleteArr.length; i++) {
         bDeleteArr[i].onclick = bDeleteOnClick;
     }
-
-
 };
 
-//////////////////////////////////////VL add user//////////////////////////////////////////////////////////////////
-///////////////////////// кнопка Добавить на закладке New User ///////////////////////////
+
+///////////////////////// кнопка "Add new user" на закладке New User /////////////////////////////////////
 let bAddUser = document.getElementById("bAddUser");
 bAddUser.onclick = function() {
     let body = {}
@@ -52,8 +50,13 @@ bAddUser.onclick = function() {
         };
     }
     postParams(body)
-    updateUsersTable();
 
+    this.classList.remove('active');
+    let bUsersTable = $("#Users_table-tab");
+    bUsersTable.addClass("active");
+
+    $("#NewUser").removeClass("show active");
+    $("#Users_table").addClass("show active");
 }
 
 /////////////////////////// кнопка Edit в таблице ///////////////////////////////////////////////////
@@ -149,13 +152,12 @@ bEditDelete.onclick = function () {
 
     if (this.classList.contains("btn-danger")) {
         getDeleteUser($("#idMod").val());
-        updateUsersTable();
     }
 
     $("#editUser").modal('hide');
 }
 
-///////////////////////////////////////// Add/update user - post:/admin/editUser or add//////////////////
+///////////////////////////////////////// POST: Add/update user -//////////////////////////////////////
 async function postParams(pbody) {
     let response = {};
     try {
@@ -183,7 +185,7 @@ async function postParams(pbody) {
         console.log(ex.message);
     }
     if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
-        // window.location.href = "/admin";
+        updateUsersTable();
     } else {
         alert("Ошибка HTTP: " + response.status);
     }
@@ -230,7 +232,7 @@ async function getDeleteUser(userID) {
     if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
         // window.location.href = "/admin";
         $("#result001").html("Deleted at " + new Date());
-
+        updateUsersTable();
     } else {
         alert("Ошибка HTTP: " + response.status);
     }
