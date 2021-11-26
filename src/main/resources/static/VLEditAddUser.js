@@ -30,6 +30,19 @@ async function updateUsersTable() {
     }
 };
 
+async function updUserRole() {
+    let jUserRole = await getUserRole();
+    $("#tableUserRole tbody").empty();
+    for (i = 0; i < jUserRole.length; i++) {
+        $('#tableUserRole tbody').append(`<tr>
+            <td> ${jUserRole[i][0]} </td>
+            <td> ${jUserRole[i][1]} </td>
+            <td> ${jUserRole[i][2]} </td>
+            <td> ${jUserRole[i][3]} </td>
+        </tr>`);
+    }
+
+}
 
 ///////////////////////// кнопка "Add new user" на закладке New User /////////////////////////////////////
 let bAddUser = document.getElementById("bAddUser");
@@ -186,6 +199,7 @@ async function postParams(pbody) {
     }
     if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
         updateUsersTable();
+        updUserRole();
     } else {
         alert("Ошибка HTTP: " + response.status);
     }
@@ -223,7 +237,7 @@ async function getDeleteUser(userID) {
     try {
         let request = "/admin/delete?id=" + userID;
         response = await fetch(request, {
-            credentials: 'include', method: 'GET',
+            credentials: 'include', method: 'DELETE',
             headers: {'Content-Type': 'application/json;charset=utf-8'}
         });
     } catch (ex) {
@@ -233,6 +247,7 @@ async function getDeleteUser(userID) {
         // window.location.href = "/admin";
         $("#result001").html("Deleted at " + new Date());
         updateUsersTable();
+        updUserRole();
     } else {
         alert("Ошибка HTTP: " + response.status);
     }
@@ -258,6 +273,24 @@ async function getUsersTable(userID) {
     }
 }
 
+///////////////////////////////// подучить таблицу User_role /////////////////////////////////////////////
+async function getUserRole(){
+    try {
+        response = await fetch("/admin/getUserRole", {
+            credentials: 'include', method: 'GET',
+            headers: {'Content-Type': 'application/json;charset=utf-8'}
+        });
+    } catch (ex) {
+        console.log(ex.message);
+    }
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299 получаем тело ответа
+        let json1 = response.json();
+        return json1;
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+
+}
 //////////////////////////////////////// разное удалить ///////////////////////////////////////////////////////////////
 let panel2 = document.getElementById("panel2");
 let vTime = new Date().toLocaleString();

@@ -89,7 +89,7 @@ public class AdminUserRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/delete")
+    @DeleteMapping(value = "/delete")
     public ResponseEntity<?> DeleteUser(@RequestParam Long id) {
         userService.deleteUser(id);
         DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");

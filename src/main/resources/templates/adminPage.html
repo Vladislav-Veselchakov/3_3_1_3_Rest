@@ -179,20 +179,24 @@
 <div id="box">
     <div id = "roles">
         <h3>Roles:</h3>
-        <table class="table-bordered">
-            <tr>
-                <th>id</th>
-                <th>Role</th>
-                <th>actions</th>
-            </tr>
-            <tr th:each = "role : ${roles}">
-                <td th:utext = "${role.id}"> </td>
-                <td th:utext = "${role.name}"> </td>
-                <td>
-                    <a th:href="@{/admin/editRole(id=${role.id})}">edit</a>
-                    <a th:href="@{/admin/deleteRole(id=${role.id})}">delete</a>
-                </td>
-            </tr>
+        <table class="table-bordered" id="tableRoles">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Role</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "role : ${roles}">
+                    <td th:utext = "${role.id}"> </td>
+                    <td th:utext = "${role.name}"> </td>
+                    <td>
+                        <a th:href="@{/admin/editRole(id=${role.id})}">edit</a>
+                        <a th:href="@{/admin/deleteRole(id=${role.id})}">delete</a>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <h3 th:utext="${result002}"></h3>
@@ -202,25 +206,23 @@
     <div id="user_role">
         <h3>User_Role:</h3>
 
-        <table class="table-bordered">
-            <tr>
-                <th>User</th>
-                <th>User_id</th>
-                <th>Role_id</th>
-                <th>Role</th>
-            </tr>
-            <tr th:each = "ur : ${userRole}">
-                <td th:utext = "${ur[0]}"> </td>
-                <td th:utext = "${ur[1]}"> </td>
-                <td th:utext = "${ur[2]}"> </td>
-                <td th:utext = "${ur[3]}"> </td>
-                <!--
-                        <td>
-                            <a th:href="@{/editRole11(id=${ur.User_id})}">edit</a>
-                            <a th:href="@{/deleteRole11(id=${ur.User_id})}">delete</a>
-                        </td>
-                -->
-            </tr>
+        <table class="table-bordered" id="tableUserRole">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>User_id</th>
+                    <th>Role_id</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "ur : ${userRole}">
+                    <td th:utext = "${ur[0]}"> </td>
+                    <td th:utext = "${ur[1]}"> </td>
+                    <td th:utext = "${ur[2]}"> </td>
+                    <td th:utext = "${ur[3]}"> </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>

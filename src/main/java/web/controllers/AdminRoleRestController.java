@@ -1,5 +1,7 @@
 package web.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -8,9 +10,12 @@ import web.model.Role;
 import web.model.User;
 import web.service.RoleService;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -19,6 +24,9 @@ public class AdminRoleRestController {
     public AdminRoleRestController(RoleService service) {
         this.roleService = service;
     }
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @GetMapping(value = "/addRole")
     String addRolePage(ModelMap model) {
@@ -54,6 +62,23 @@ public class AdminRoleRestController {
         return "redirect:/admin";
     }
 
+    @GetMapping(value = "/getUserRole")
+    public ResponseEntity<List<Object>> getUserRole() {
+        List<Object> userRole = entityManager.createNativeQuery(
+                """
+                    SELECT u.name as user, ur.User_id, ur.Role_id, r.name as role
+                    FROM user_role as ur
+                    LEFT JOIN users as u
+                        ON ur.User_id = u.id
+                    LEFT JOIN roles as r\s
+                        ON ur.Role_id = r.id
+                    """).getResultList();
+        return userRole != null &&  !userRole.isEmpty()
+                ? new ResponseEntity<>(userRole, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        //return "adminPage";
+    }
 
 }
 
