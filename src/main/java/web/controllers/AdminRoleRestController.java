@@ -14,9 +14,9 @@ import java.util.GregorianCalendar;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminRoleController {
+public class AdminRoleRestController {
     private RoleService roleService;
-    public AdminRoleController(RoleService service) {
+    public AdminRoleRestController(RoleService service) {
         this.roleService = service;
     }
 
